@@ -1,6 +1,6 @@
 # stellagama.py
 # A module with various useful functions by Omer Golan-Joel
-# v3.0 - February 20th, 2020
+# v3.1 - July 19th, 2020
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -36,7 +36,7 @@ def dice(n, sides):
 def pseudo_hex(num):
     num = int(num)
     code = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q",
-            "E", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+            "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     num = code[num]
     return num
 
