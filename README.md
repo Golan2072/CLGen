@@ -3,6 +3,10 @@ Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
 
+v0.45 - August 10th, 2020
+- Implemented command line character output string.
+- Tweaked career choice for more interesting variety.
+
 v0.4 - August 10th, 2020
 - Resolved several invetory iteration problems.
 - Added skill and inventory processing.
