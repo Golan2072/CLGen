@@ -1,6 +1,6 @@
 # CLGen-lib.py
 # Cepheus Light character generator by Omer Golan-Joel
-# v0.3 - August 10th, 2020
+# v0.4 - August 10th, 2020
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -202,7 +202,7 @@ def add_possession(possessions, item):
 
 
 def skill_stringer(input_dict):
-    return ', '.join('-'.join((k, str(v))) for k, v in sorted(input_dict.items()))
+    return ', '.join(' '.join((k, str(v))) for k, v in sorted(input_dict.items()))
 
 
 def possession_stringer(input_dict):
@@ -279,13 +279,53 @@ class Character:
     def reduce_mental_characteristic(self, amount):
         characteristic = random.choice(["INT", "EDU"])
         self.upp[characteristic] -= amount
+    def title_gen(self):
+        if self.upp["SOC"] == 11 and self.sex == "male":
+            self.title = "Knight"
+        elif self.upp["SOC"] == 11 and self.sex == "female":
+            self.title = "Dame"
+        elif self.upp["SOC"] == 12 and self.sex == "male":
+            self.title = "Baron"
+        elif self.upp["SOC"] == 12 and self.sex == "female":
+            self.title = "Baroness"
+        elif self.upp["SOC"] == 13 and self.sex == "male":
+            self.title = "Marquis"
+        elif self.upp["SOC"] == 13 and self.sex == "female":
+            self.title = "Marquess"
+        elif self.upp["SOC"] == 14 and self.sex == "male":
+            self.title = "Count"
+        elif self.upp["SOC"] == 14 and self.sex == "female":
+            self.title = "Countess"
+        elif self.upp["SOC"] == 15 and self.sex == "male":
+            self.title = "Duke"
+        elif self.upp["SOC"] == 15 and self.sex == "female":
+            self.title = "Duchess"
+        elif self.rank >= 5 and self.rank != "":
+            self.title = careers[self.career]["ranks"][self.rank]
+        elif self.career == "Scholar" and self.rank >= 3:
+            self.title = careers[self.career]["ranks"][self.rank]
+        elif "Medicine" in self.skill_counter:
+            if self.skill_counter["Medicine"] >= 3:
+                self.title = "Dr."
+        elif self.upp["EDU"] >= 12:
+            self.title = "Dr."
+        elif self.upp["EDU"] >= 15:
+            self.title = "Professor"
+        elif self.sex == "male":
+            self.title = "Mr."
+        elif self.sex == "female":
+            self.title = random.choice(["Mrs.", "Ms.", "Ms."])
+        else:
+            self.title = "Gecko"
     def __init__(self):
         self.upp = {"STR": stellagama.dice(2, 6), "DEX": stellagama.dice(2, 6), "END": stellagama.dice(2, 6),
                     "INT": stellagama.dice(2, 6), "EDU": stellagama.dice(2, 6), "SOC": stellagama.dice(2, 6)}
         self.upp_dms = upp_dms(self.upp)
         self.history = []
         self.skills = []
+        self.skill_counter = {}
         self.possessions = []
+        self.possession_counter={}
         self.rank = 0
         self.terms = 0
         self.cash = 0
@@ -379,6 +419,8 @@ class Character:
                             break
             else:
                 pass
+            self.terms += 1
+            self.age += 4
         # Reenlistment
             reenlistment = stellagama.dice(2,6)
             if self.terms < 7:
@@ -391,8 +433,6 @@ class Character:
                     pass
                 else:
                     break
-            self.terms += 1
-            self.age += 4
         # Mustering Out
         muster_throws = self.terms
         if self.rank in [1,2]:
@@ -405,7 +445,9 @@ class Character:
             muster_throws += 3
         for i in range (0, muster_throws):
             self.muster()
-        for item in self.possessions:
+        # Data Processing
+        possessions_iteration = list.copy(self.possessions)
+        for item in possessions_iteration:
             if item == "Weapon":
                 self.possessions[self.possessions.index(item)] = random.choice(weapons)
             if item == "+1 INT":
@@ -426,7 +468,8 @@ class Character:
             if item == "+1 SOC":
                 self.possessions.remove(item)
                 self.upp["SOC"] += 1
-        for skill in self.skills:
+        skill_iteration = list.copy(self.skills)
+        for skill in skill_iteration:
             if skill == "+1 INT":
                 self.skills.remove(skill)
                 self.upp["INT"] += 1
@@ -445,15 +488,33 @@ class Character:
             if skill == "+1 SOC":
                 self.skills.remove(skill)
                 self.upp["SOC"] += 1
-
+        if self.status == "DECEASED":
+            self.possessions = []
+            self.cash = 0
+        self.skill_counter = collections.Counter(self.skills)
+        self.possession_counter = collections.Counter(self.possessions)
+        self.title_gen()
+        if self.title == "":
+            if self.sex == "male":
+                self.title = "Mr."
+            elif self.sex == "female":
+                self.title = random.choice(["Mrs.", "Ms.", "Ms."])
+        self.skill_string = skill_stringer(self.skill_counter)
+        self.possessions_string = possession_stringer( self.possession_counter)
 
 # Test Area
 for i in range (0, 100):
     character = Character()
+    print(character.title, character.name, character.surname)
     print (character.career)
-    print (character.possessions)
+    print (character.possessions_string)
     print (character.cash)
+    if character.status == "DECEASED":
+        print (character.status)
+    else:
+        pass
     print ("terms " + str(character.terms))
-    print (character.skills)
+    print (character.skill_string)
     print (character.upp)
     print ("age " + str(character.age))
+    print ("")
