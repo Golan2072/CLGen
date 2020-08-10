@@ -1,6 +1,6 @@
 # CLGen-lib.py
 # Cepheus Light character generator by Omer Golan-Joel
-# v0.4 - August 10th, 2020
+# v0.45 - August 10th, 2020
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -221,13 +221,16 @@ def career_choice(upp_dict):
     if max(upp_dict, key=upp_dict.get) == "DEX":
         career = random.choice(["Pirate", "Rogue"])
     elif max(upp_dict, key=upp_dict.get) == "END":
-        career = random.choice(["Army", "Colonist"])
+        career = random.choice(["Army", "Army", "Colonist", "Marine"])
     elif max(upp_dict, key=upp_dict.get) == "INT":
-        career = random.choice(["Agent", "Belter", "Marine", "Merchant", "Navy", "Scout"])
+        career = random.choice(["Agent", "Belter", "Marine", "Marine", "Marine", "Merchant", "Merchant", "Merchant", "Navy", "Navy", "Navy", "Scout"])
     elif max(upp_dict, key=upp_dict.get) == "EDU":
-        career = random.choice(["Navy", "Scholar"])
+        career = random.choice(["Navy", "Navy", "Scholar"])
     elif max(upp_dict, key=upp_dict.get) == "SOC":
-        career = "Elite"
+        if upp_dict["SOC"] >= 11:
+            career = "Elite"
+        else:
+            career = random.choice(["Army", "Navy", "Marine", "Scout", "Merchant", "Rogue"])
     else:
         career = "Colonist"
     return career
@@ -300,9 +303,7 @@ class Character:
             self.title = "Duke"
         elif self.upp["SOC"] == 15 and self.sex == "female":
             self.title = "Duchess"
-        elif self.rank >= 5 and self.rank != "":
-            self.title = careers[self.career]["ranks"][self.rank]
-        elif self.career == "Scholar" and self.rank >= 3:
+        elif self.rank >= 4 and self.rank != "":
             self.title = careers[self.career]["ranks"][self.rank]
         elif "Medicine" in self.skill_counter:
             if self.skill_counter["Medicine"] >= 3:
@@ -311,6 +312,8 @@ class Character:
             self.title = "Dr."
         elif self.upp["EDU"] >= 15:
             self.title = "Professor"
+        elif self.career == "Scholar" and self.rank >= 3:
+            self.title = careers[self.career]["ranks"][self.rank]
         elif self.sex == "male":
             self.title = "Mr."
         elif self.sex == "female":
@@ -337,6 +340,8 @@ class Character:
         self.surname = stellagama.random_line("surnames.txt")
         self.career = career_choice(self.upp)
         self.age = 18
+        self.character_string = ""
+        self.upp_string = ""
         self.homeworld = random.choice(["High-Tech World", "Colony", "Inhospitable Outpost", "Primitive Backwater"])
         self.skills.append(random.choice(homeworlds[self.homeworld]))
         # Enlistment
@@ -445,6 +450,10 @@ class Character:
             muster_throws += 3
         for i in range (0, muster_throws):
             self.muster()
+        if self.status != "DECEASED":
+            self.skills.append(random.choice(skills))
+        else:
+            pass
         # Data Processing
         possessions_iteration = list.copy(self.possessions)
         for item in possessions_iteration:
@@ -501,20 +510,16 @@ class Character:
                 self.title = random.choice(["Mrs.", "Ms.", "Ms."])
         self.skill_string = skill_stringer(self.skill_counter)
         self.possessions_string = possession_stringer( self.possession_counter)
+        self.upp_string = f"{stellagama.pseudo_hex(self.upp['STR'])}{stellagama.pseudo_hex(self.upp['DEX'])}{stellagama.pseudo_hex(self.upp['END'])}{stellagama.pseudo_hex(self.upp['INT'])}{stellagama.pseudo_hex(self.upp['EDU'])}{stellagama.pseudo_hex(self.upp['SOC'])}"
+        if self.status == "DECEASED":
+            self.character_string = f"{self.title} {self.name} {self.surname}\t{self.upp_string}\t Age {self.age}\n{self.terms} terms {self.career} {careers[self.career]['ranks'][self.rank]}\tCr{self.cash}\n{self.status}"
+        elif self.possessions != []:
+            self.character_string = f"{self.title} {self.name} {self.surname}\t{self.upp_string}\t Age {self.age}\n{self.terms} terms {self.career} {careers[self.career]['ranks'][self.rank]}\tCr{self.cash}\n{self.skill_string}\n{self.possessions_string}"
+        elif self.possessions == []:
+            self.character_string = f"{self.title} {self.name} {self.surname}\t{self.upp_string}\t Age {self.age}\n{self.terms} terms {self.career} {careers[self.career]['ranks'][self.rank]}\tCr{self.cash}\n{self.skill_string}"
 
 # Test Area
 for i in range (0, 100):
     character = Character()
-    print(character.title, character.name, character.surname)
-    print (character.career)
-    print (character.possessions_string)
-    print (character.cash)
-    if character.status == "DECEASED":
-        print (character.status)
-    else:
-        pass
-    print ("terms " + str(character.terms))
-    print (character.skill_string)
-    print (character.upp)
-    print ("age " + str(character.age))
+    print (character.character_string)
     print ("")
