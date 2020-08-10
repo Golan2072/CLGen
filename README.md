@@ -3,8 +3,13 @@ Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
 
+v0.4 - August 10th, 2020
+- Resolved several invetory iteration problems.
+- Added skill and inventory processing.
+- Added personal titles.
+
 v0.3 - August 10th, 2020
-- Full character generation logic completed (though not the output code)
+- Full character generation logic completed (though not the output code).
 
 v0.2 - August 9th, 2020
 - Added all 12 careers' data.
