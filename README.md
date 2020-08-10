@@ -3,6 +3,9 @@ Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
 
+v0.5 - August 10th, 2020
+- First crude Flask web "interface" added.
+
 v0.45 - August 10th, 2020
 - Implemented command line character output string.
 - Tweaked career choice for more interesting variety.
