@@ -440,6 +440,7 @@ class Character:
                                 break
                         if not death:
                             self.upp[characteristic] = 1
+                            break
             else:
                 pass
             self.terms += 1
