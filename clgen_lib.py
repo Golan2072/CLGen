@@ -1,6 +1,6 @@
 # CLGen-lib.py
 # Cepheus Light character generator by Omer Golan-Joel
-# v0.45 - August 10th, 2020
+# v0.6 - August 11th, 2020
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -150,24 +150,26 @@ careers = {
                 "specialist": ("Survival", "Admin", "Medicine", "Science", "Repair", "Carousing"),
                 "advanced education": ("Piloting", "Computer", "Engineering", "Medicine", "Jack o' Trades", "Science")},
     'Scout': {"name": 'Scout', "qualification": 6, "qualification DM": "INT", 'survival': 7, "survival DM": "END",
-                "reenlistment": 6, "advancement": 6, "advancement DM": "INT", "ranks": (
+              "reenlistment": 6, "advancement": 6, "advancement DM": "INT", "ranks": (
             "Scout", "", "", "Senior Scout", "", "", "Director",
             "Distinguished Professor"),
-                "rank skills": {0: "Piloting", 3: "SCience"},
-                "muster cash": (1000, 5000, 10000, 10000, 20000, 50000, 50000),
-                "muster materials": (
-                    "Low Passage", "+1 INT", "Weapon", "Mid Passage", "Vacc Suit", "Scout Ship", "Explorer's Society"),
-                "personal": ("+1 STR", '+1 DEX', "Athletics", "Jack o' Trades", "+1 EDU", "Melee Combat"),
-                "service": ("Repair", "Computer", "Gun Combat", "Piloting", "Recon", "Piloting"),
-                "specialist": ("Engineering", "Gunnery", "Science", "Piloting", "Investigation", "Stealth"),
-                "advanced education": ("Admin", "Computer", "Grav Vehicle", "Medicine", "Science", "Tactics")}
+              "rank skills": {0: "Piloting", 3: "SCience"},
+              "muster cash": (1000, 5000, 10000, 10000, 20000, 50000, 50000),
+              "muster materials": (
+                  "Low Passage", "+1 INT", "Weapon", "Mid Passage", "Vacc Suit", "Scout Ship", "Explorer's Society"),
+              "personal": ("+1 STR", '+1 DEX', "Athletics", "Jack o' Trades", "+1 EDU", "Melee Combat"),
+              "service": ("Repair", "Computer", "Gun Combat", "Piloting", "Recon", "Piloting"),
+              "specialist": ("Engineering", "Gunnery", "Science", "Piloting", "Investigation", "Stealth"),
+              "advanced education": ("Admin", "Computer", "Grav Vehicle", "Medicine", "Science", "Tactics")}
 }
 
 # Other data
 
-weapons = ("Axe", "Cudgel", "Dagger", "Spear", "Staff", "Sword", "Broadsword", "Great Axe", "Cutlass", "Machete", "Stun Prod",
-    "Vibro-Blade", "Bow", "Crossbow", "Revolver", "Shotgun", "Autopistol", "Carbine", "Rifle", "Submachinegun", "Assault Rifle",
-        "Body Pistol", "Snub Revolver", "Accelerator Rifle", "Stunner")
+weapons = (
+"Axe", "Cudgel", "Dagger", "Spear", "Staff", "Sword", "Broadsword", "Great Axe", "Cutlass", "Machete", "Stun Prod",
+"Vibro-Blade", "Bow", "Crossbow", "Revolver", "Shotgun", "Autopistol", "Carbine", "Rifle", "Submachinegun",
+"Assault Rifle",
+"Body Pistol", "Snub Revolver", "Accelerator Rifle", "Stunner")
 skills = (
     "Administration", "Aircraft", "Animals", "Athletics", "Carousing", "Computer", "Deception", "Demolitions",
     "Driving",
@@ -223,7 +225,9 @@ def career_choice(upp_dict):
     elif max(upp_dict, key=upp_dict.get) == "END":
         career = random.choice(["Army", "Army", "Colonist", "Marine"])
     elif max(upp_dict, key=upp_dict.get) == "INT":
-        career = random.choice(["Agent", "Belter", "Marine", "Marine", "Marine", "Merchant", "Merchant", "Merchant", "Navy", "Navy", "Navy", "Scout"])
+        career = random.choice(
+            ["Agent", "Belter", "Marine", "Marine", "Marine", "Merchant", "Merchant", "Merchant", "Navy", "Navy",
+             "Navy", "Scout"])
     elif max(upp_dict, key=upp_dict.get) == "EDU":
         career = random.choice(["Navy", "Navy", "Scholar"])
     elif max(upp_dict, key=upp_dict.get) == "SOC":
@@ -258,10 +262,11 @@ class Character:
     def add_skill(self):
         skill_table = random.choice(("personal", "service", "specialist", "advanced education"))
         self.skills.append(random.choice(careers[self.career][skill_table]))
+
     def muster(self):
         muster_table = random.choice(["muster materials", "muster materials", "muster cash"])
-        muster_roll = stellagama.dice(1, 6)-1
-        if muster_table == "muster cash" and self.cash_counter <3:
+        muster_roll = stellagama.dice(1, 6) - 1
+        if muster_table == "muster cash" and self.cash_counter < 3:
             if "Carousing" in self.skills:
                 muster_roll += 1
             else:
@@ -276,12 +281,15 @@ class Character:
             self.possessions.append((careers[self.career]["muster materials"][muster_roll]))
         else:
             pass
+
     def reduce_physical_characteristic(self, amount):
         characteristic = random.choice(["STR", "DEX", "END"])
         self.upp[characteristic] -= amount
+
     def reduce_mental_characteristic(self, amount):
         characteristic = random.choice(["INT", "EDU"])
         self.upp[characteristic] -= amount
+
     def title_gen(self):
         if self.upp["SOC"] == 11 and self.sex == "male":
             self.title = "Knight"
@@ -320,7 +328,8 @@ class Character:
             self.title = random.choice(["Mrs.", "Ms.", "Ms."])
         else:
             self.title = "Gecko"
-    def __init__(self):
+
+    def __init__(self, death=True, career = []):
         self.upp = {"STR": stellagama.dice(2, 6), "DEX": stellagama.dice(2, 6), "END": stellagama.dice(2, 6),
                     "INT": stellagama.dice(2, 6), "EDU": stellagama.dice(2, 6), "SOC": stellagama.dice(2, 6)}
         self.upp_dms = upp_dms(self.upp)
@@ -328,7 +337,7 @@ class Character:
         self.skills = []
         self.skill_counter = {}
         self.possessions = []
-        self.possession_counter={}
+        self.possession_counter = {}
         self.rank = 0
         self.terms = 0
         self.cash = 0
@@ -338,7 +347,10 @@ class Character:
         self.sex = random.choice(["male", "female"])
         self.name = name_gen(self.sex)
         self.surname = stellagama.random_line("surnames.txt")
-        self.career = career_choice(self.upp)
+        if career == []:
+            self.career = career_choice(self.upp)
+        else:
+            self.career = career
         self.age = 18
         self.character_string = ""
         self.upp_string = ""
@@ -356,25 +368,28 @@ class Character:
         # Career generation loop
         in_career = True
         while in_career:
-        # Survival
-            survival = stellagama.dice(2,6)
-            survival += self.upp_dms[careers[self.career]["survival DM"]]
-            if survival >= careers[self.career]["survival"]:
+            # Survival
+            if death:
+                survival = stellagama.dice(2, 6)
+                survival += self.upp_dms[careers[self.career]["survival DM"]]
+                if survival >= careers[self.career]["survival"]:
+                    pass
+                else:
+                    self.status = "DECEASED"
+                    break
+            if not death:
                 pass
-            else:
-                self.status = "DECEASED"
-                break
-        # Skills
+            # Skills
             if self.terms == 1:
-                for i in range (0, 2):
+                for i in range(0, 2):
                     self.add_skill()
             else:
                 self.add_skill()
             if self.rank in careers[self.career]["rank skills"]:
-                    self.skills.append(careers[self.career]["rank skills"][self.rank])
-        # Advancement
-            if self.rank in range (0, 6):
-                advancement = stellagama.dice(2,6)
+                self.skills.append(careers[self.career]["rank skills"][self.rank])
+            # Advancement
+            if self.rank in range(0, 6):
+                advancement = stellagama.dice(2, 6)
                 advancement += self.upp_dms[careers[self.career]["advancement DM"]]
                 if advancement >= careers[self.career]["advancement"]:
                     self.rank += 1
@@ -383,7 +398,7 @@ class Character:
                     pass
             else:
                 pass
-        # Aging
+            # Aging
             if self.age >= 34:
                 aging_throw = stellagama.dice(2, 6) - self.terms
                 if aging_throw >= 1:
@@ -391,43 +406,46 @@ class Character:
                 elif aging_throw == 0:
                     self.reduce_physical_characteristic(1)
                 elif aging_throw == -1:
-                    for i in range (0, 2):
+                    for i in range(0, 2):
                         self.reduce_physical_characteristic(1)
                 elif aging_throw == -2:
-                    for i in range (0, 3):
+                    for i in range(0, 3):
                         self.reduce_physical_characteristic(1)
                 elif aging_throw == -3:
                     self.reduce_physical_characteristic(2)
-                    for i in range (0, 2):
+                    for i in range(0, 2):
                         self.reduce_physical_characteristic(1)
                 elif aging_throw == -4:
                     self.reduce_physical_characteristic(1)
-                    for i in range (0, 2):
+                    for i in range(0, 2):
                         self.reduce_physical_characteristic(2)
                 elif aging_throw == -5:
-                    for i in range (0, 3):
+                    for i in range(0, 3):
                         self.reduce_physical_characteristic(2)
                 elif aging_throw == -6:
                     self.reduce_mental_characteristic(1)
-                    for i in range (0, 2):
+                    for i in range(0, 2):
                         self.reduce_physical_characteristic(2)
                 else:
                     pass
                 for characteristic in [self.upp["STR"], self.upp["DEX"], self.upp["END"]]:
                     if characteristic <= 0:
-                        aging_crisis = stellagama.dice(2, 6)
-                        if aging_crisis < 6:
-                            self.status = "DECEASED"
-                            break
-                        else:
+                        if death:
+                            aging_crisis = stellagama.dice(2, 6)
+                            if aging_crisis < 6:
+                                self.status = "DECEASED"
+                                break
+                            else:
+                                self.upp[characteristic] = 1
+                                break
+                        if not death:
                             self.upp[characteristic] = 1
-                            break
             else:
                 pass
             self.terms += 1
             self.age += 4
-        # Reenlistment
-            reenlistment = stellagama.dice(2,6)
+            # Reenlistment
+            reenlistment = stellagama.dice(2, 6)
             if self.terms < 7:
                 if reenlistment >= careers[self.career]["reenlistment"]:
                     pass
@@ -440,7 +458,7 @@ class Character:
                     break
         # Mustering Out
         muster_throws = self.terms
-        if self.rank in [1,2]:
+        if self.rank in [1, 2]:
             pass
         elif self.rank == 4:
             muster_throws += 1
@@ -448,7 +466,7 @@ class Character:
             muster_throws += 2
         elif self.rank == 6:
             muster_throws += 3
-        for i in range (0, muster_throws):
+        for i in range(0, muster_throws):
             self.muster()
         if self.status != "DECEASED":
             self.skills.append(random.choice(skills))
@@ -509,7 +527,7 @@ class Character:
             elif self.sex == "female":
                 self.title = random.choice(["Mrs.", "Ms.", "Ms."])
         self.skill_string = skill_stringer(self.skill_counter)
-        self.possessions_string = possession_stringer( self.possession_counter)
+        self.possessions_string = possession_stringer(self.possession_counter)
         self.upp_string = f"{stellagama.pseudo_hex(self.upp['STR'])}{stellagama.pseudo_hex(self.upp['DEX'])}{stellagama.pseudo_hex(self.upp['END'])}{stellagama.pseudo_hex(self.upp['INT'])}{stellagama.pseudo_hex(self.upp['EDU'])}{stellagama.pseudo_hex(self.upp['SOC'])}"
         if self.status == "DECEASED":
             self.character_string = f"{self.title} {self.name} {self.surname}\t{self.upp_string}\t Age {self.age}\n{self.terms} terms {self.career} {careers[self.career]['ranks'][self.rank]}\tCr{self.cash}\n{self.status}"
@@ -517,9 +535,12 @@ class Character:
             self.character_string = f"{self.title} {self.name} {self.surname}\t{self.upp_string}\t Age {self.age}\n{self.terms} terms {self.career} {careers[self.career]['ranks'][self.rank]}\tCr{self.cash}\n{self.skill_string}\n{self.possessions_string}"
         elif self.possessions == []:
             self.character_string = f"{self.title} {self.name} {self.surname}\t{self.upp_string}\t Age {self.age}\n{self.terms} terms {self.career} {careers[self.career]['ranks'][self.rank]}\tCr{self.cash}\n{self.skill_string}"
+    def print_character(self):
+        print(self.character_string)
+        print("")
+    def return_character(self):
+        return self.character_string
 
 # Test Area
-for i in range (0, 100):
-    character = Character()
-    print (character.character_string)
-    print ("")
+#character = Character(False, "Army")
+#character.print_character()
