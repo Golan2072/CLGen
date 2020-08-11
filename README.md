@@ -3,6 +3,9 @@ Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
 
+v0.6 - August 11th, 2020
+- Code now has the basis for toggling character death and career choice.
+
 v0.5 - August 10th, 2020
 - First crude Flask web "interface" added.
 
