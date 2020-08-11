@@ -5,6 +5,7 @@ Contact me at golan2072@gmail.com
 
 v0.6 - August 11th, 2020
 - Code now has the basis for toggling character death and career choice.
+- Added support for UTF-8 non-ASCII characters.
 
 v0.5 - August 10th, 2020
 - First crude Flask web "interface" added.
