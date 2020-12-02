@@ -8,7 +8,6 @@
 import flask
 import clgen_lib
 
-character = clgen_lib.Character()
 
 
 app = flask.Flask(__name__)
@@ -16,6 +15,8 @@ app = flask.Flask(__name__)
 
 @app.route('/')
 def hello():
+    character = clgen_lib.Character()
+
     return '''
 <html>
     <head>
@@ -28,8 +29,10 @@ def hello():
     '''+ str(character.terms) + " terms " + character.career + " " + clgen_lib.careers[character.career]['ranks'][character.rank] + "&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp" + "Cash:" + str(character.cash) + '''
     <br><br>
     '''+ "Skills: " +  character.skill_string + '''<br><br>
-    '''+ "Possessions: " +  character.possessions_string + '''<br>
-    
+    '''+ "Possessions: " +  character.possessions_string + '''
+
+    <p><a href="/">Generate another</a></p>
+
  </body>
 </html>'''
 
