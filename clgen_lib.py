@@ -329,7 +329,7 @@ class Character:
         else:
             self.title = "Gecko"
 
-    def __init__(self, death=True, career = []):
+    def __init__(self, death=True, career = None):
         self.upp = {"STR": stellagama.dice(2, 6), "DEX": stellagama.dice(2, 6), "END": stellagama.dice(2, 6),
                     "INT": stellagama.dice(2, 6), "EDU": stellagama.dice(2, 6), "SOC": stellagama.dice(2, 6)}
         self.upp_dms = upp_dms(self.upp)
@@ -347,10 +347,11 @@ class Character:
         self.sex = random.choice(["male", "female"])
         self.name = name_gen(self.sex)
         self.surname = stellagama.random_line("surnames.txt")
-        if career == []:
-            self.career = career_choice(self.upp)
-        else:
-            self.career = career
+
+        if career is None:
+            career = career_choice(self.upp)
+        self.career = career
+
         self.age = 18
         self.character_string = ""
         self.upp_string = ""
@@ -361,10 +362,10 @@ class Character:
         enlistment += self.upp_dms[careers[self.career]["qualification DM"]]
         if enlistment >= careers[self.career]["qualification"]:
             self.career = self.career
-            self.history.append(f"Successfully enlisted into the {self.career}")
+            self.history.append(f"Successfully enlisted in {self.career}")
         else:
             self.career = random.choice(["Colonist", "Rogue", "Marine", "Merchant", "Navy", "Scout"])
-            self.history.append(f"Drafted into the {self.career}")
+            self.history.append(f"Drafted into {self.career}")
         # Career generation loop
         in_career = True
         while in_career:
