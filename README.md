@@ -1,7 +1,25 @@
-CLGen
+#CLGen
+
 Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
+
+## Running it
+
+You need some form of Python, including an installation of pip.
+
+Install dependencies with:
+
+`pip install flask`
+
+Run the application with:
+
+`python clgen.py`
+
+Visit http://localhost:5000/ in your web browser to generate
+a character.
+
+## Versions
 
 v0.6 - August 11th, 2020
 - Code now has the basis for toggling character death and career choice.
