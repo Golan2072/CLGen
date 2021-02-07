@@ -166,10 +166,10 @@ careers = {
 # Other data
 
 weapons = (
-"Axe", "Cudgel", "Dagger", "Spear", "Staff", "Sword", "Broadsword", "Great Axe", "Cutlass", "Machete", "Stun Prod",
-"Vibro-Blade", "Bow", "Crossbow", "Revolver", "Shotgun", "Autopistol", "Carbine", "Rifle", "Submachinegun",
-"Assault Rifle",
-"Body Pistol", "Snub Revolver", "Accelerator Rifle", "Stunner")
+    "Axe", "Cudgel", "Dagger", "Spear", "Staff", "Sword", "Broadsword", "Great Axe", "Cutlass", "Machete", "Stun Prod",
+    "Vibro-Blade", "Bow", "Crossbow", "Revolver", "Shotgun", "Autopistol", "Carbine", "Rifle", "Submachinegun",
+    "Assault Rifle",
+    "Body Pistol", "Snub Revolver", "Accelerator Rifle", "Stunner")
 skills = (
     "Administration", "Aircraft", "Animals", "Athletics", "Carousing", "Computer", "Deception", "Demolitions",
     "Driving",
@@ -329,7 +329,7 @@ class Character:
         else:
             self.title = "Gecko"
 
-    def __init__(self, death=True, career = []):
+    def __init__(self, death=True, career=[]):
         self.upp = {"STR": stellagama.dice(2, 6), "DEX": stellagama.dice(2, 6), "END": stellagama.dice(2, 6),
                     "INT": stellagama.dice(2, 6), "EDU": stellagama.dice(2, 6), "SOC": stellagama.dice(2, 6)}
         self.upp_dms = upp_dms(self.upp)
@@ -522,6 +522,7 @@ class Character:
         self.skill_counter = collections.Counter(self.skills)
         self.possession_counter = collections.Counter(self.possessions)
         self.title_gen()
+        self.rank_name = careers[self.career]['ranks'][self.rank]
         if self.title == "":
             if self.sex == "male":
                 self.title = "Mr."
@@ -531,17 +532,21 @@ class Character:
         self.possessions_string = possession_stringer(self.possession_counter)
         self.upp_string = f"{stellagama.pseudo_hex(self.upp['STR'])}{stellagama.pseudo_hex(self.upp['DEX'])}{stellagama.pseudo_hex(self.upp['END'])}{stellagama.pseudo_hex(self.upp['INT'])}{stellagama.pseudo_hex(self.upp['EDU'])}{stellagama.pseudo_hex(self.upp['SOC'])}"
         if self.status == "DECEASED":
+            self.skill_string = ""
+            self.possessions_string=""
             self.character_string = f"{self.title} {self.name} {self.surname}\t{self.upp_string}\t Age {self.age}\n{self.terms} terms {self.career} {careers[self.career]['ranks'][self.rank]}\tCr{self.cash}\n{self.status}"
-        elif self.possessions != []:
+        elif self.possessions:
             self.character_string = f"{self.title} {self.name} {self.surname}\t{self.upp_string}\t Age {self.age}\n{self.terms} terms {self.career} {careers[self.career]['ranks'][self.rank]}\tCr{self.cash}\n{self.skill_string}\n{self.possessions_string}"
-        elif self.possessions == []:
+        elif not self.possessions:
             self.character_string = f"{self.title} {self.name} {self.surname}\t{self.upp_string}\t Age {self.age}\n{self.terms} terms {self.career} {careers[self.career]['ranks'][self.rank]}\tCr{self.cash}\n{self.skill_string}"
+
     def print_character(self):
         print(self.character_string)
         print("")
+
     def return_character(self):
         return self.character_string
 
 # Test Area
-#character = Character(False, "Army")
-#character.print_character()
+# character = Character(False, "Navy")
+# character.print_character()

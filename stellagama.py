@@ -10,6 +10,8 @@ import os
 import platform
 
 # functions
+
+
 def yn():
     query = 1
     while query == 1:
@@ -82,7 +84,7 @@ def clear_screen():
 
 
 def random_line(filename):
-    with open(filename, "r") as line_list:
+    with open(filename, "r", encoding='utf-8', errors='ignore') as line_list:
         line = random.choice(line_list.readlines())
         line = line.strip()
     return line
