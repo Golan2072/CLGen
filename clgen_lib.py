@@ -1,6 +1,6 @@
 # CLGen-lib.py
 # Cepheus Light character generator by Omer Golan-Joel
-# v0.6 - August 11th, 2020
+# v1.01 - February 7th, 2021
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -264,7 +264,7 @@ class Character:
         self.skills.append(random.choice(careers[self.career][skill_table]))
 
     def muster(self):
-        muster_table = random.choice(["muster materials", "muster materials", "muster cash"])
+        muster_table = random.choice(["muster materials", "muster cash"])
         muster_roll = stellagama.dice(1, 6) - 1
         if muster_table == "muster cash" and self.cash_counter < 3:
             if "Carousing" in self.skills:
