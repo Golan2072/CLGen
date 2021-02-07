@@ -1,1 +1,1 @@
-web: flask run:CLGen
+web: flask run:app
