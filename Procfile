@@ -1,1 +1,1 @@
-web: gunicorn run:CLGen
+web: gunicorn run:app
