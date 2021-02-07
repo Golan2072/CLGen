@@ -1,1 +1,1 @@
-web: flask dep:app
+web: flask dep:CLGen
