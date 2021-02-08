@@ -329,7 +329,8 @@ class Character:
         else:
             self.title = "Gecko"
 
-    def __init__(self, death=True, career=[]):
+    def __init__(self, death=False, career=[]):
+        self.death = death
         self.upp = {"STR": stellagama.dice(2, 6), "DEX": stellagama.dice(2, 6), "END": stellagama.dice(2, 6),
                     "INT": stellagama.dice(2, 6), "EDU": stellagama.dice(2, 6), "SOC": stellagama.dice(2, 6)}
         self.upp_dms = upp_dms(self.upp)
@@ -369,15 +370,18 @@ class Character:
         in_career = True
         while in_career:
             # Survival
-            if death:
+            if self.death:
                 survival = stellagama.dice(2, 6)
                 survival += self.upp_dms[careers[self.career]["survival DM"]]
                 if survival >= careers[self.career]["survival"]:
                     pass
-                else:
+                elif survival < careers[self.career]["survival"]:
                     self.status = "DECEASED"
-                    break
-            if not death:
+                else:
+                    pass
+            elif not self.death:
+                pass
+            else:
                 pass
             # Skills
             if self.terms == 1:
