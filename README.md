@@ -3,6 +3,9 @@ Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
 
+v1.2 - February 8th, 2021
+- Now includes the ability to choose between death in character generation and no death in character generation.
+
 v1.1 - February 8th, 2021
 - Now includes a "generate" button to regenerate the character.
 - Fixed the "broke character" bug.
