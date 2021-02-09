@@ -1,0 +1,152 @@
+swagger: "2.0"
+info:
+  description: "This API is for programmatic access to various generators and utilities for Cepheus Light."
+  version: "1.0.0"
+  title: "Cepheus Light API"
+  termsOfService: "https://www.stellagamapublishing.com/"
+  contact:
+    email: "golan2072@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "cepheuslightgen.herokuapp.com"
+basePath: "/api"
+tags:
+  - name: "char"
+    description: "Utilities for character generation and manipulation"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /chargen:
+    get:
+      tags:
+        - "chargen"
+      summary: "Character Generation"
+      description: "Generates a character with default Cepheus Light rules"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "death"
+          in: "query"
+          description: "True if a character can die during creation"
+          required: false
+          type: "string"
+          enum:
+            - "true"
+            - "false"
+          default: "true"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Character"
+        "400":
+          description: "Invalid parameter"
+definitions:
+  Character:
+    type: "object"
+    properties:
+      death:
+        type: "boolean"
+      history:
+        type: "array"
+        items:
+          type: "string"
+      skills:
+        type: "array"
+        items:
+          type: "string"
+      posessions:
+        type: "array"
+        items:
+          type: "string"
+      rank:
+        type: "integer"
+        format: "int32"
+      terms:
+        type: "integer"
+        format: "int32"
+      cash:
+        type: "integer"
+        format: "int64"
+      cash_counter:
+        type: "integer"
+        format: "int32"
+      title:
+        type: "string"
+        example: "Mr."
+      status:
+        type: "string"
+        example: "DECEASED"
+      name:
+        type: "string"
+        example: "Bob"
+      surname:
+        type: "string"
+        example: "McBob"
+      career:
+        type: "string"
+        example: "Army"
+      age:
+        type: "integer"
+        format: "int32"
+      character_string:
+        type: "string"
+      upp_string:
+        type: "string"
+        example: "123456"
+      homeworld:
+        type: "string"
+        example: "Primitive Backwater"
+      rank_name:
+        type: "string"
+        example: "Captain"
+      skill_string:
+        type: "string"
+      posessions_string:
+        type: "string"
+      upp:
+        type: "object"
+        properties:
+          STR:
+            type: "integer"
+            format: "int32"
+          DEX:
+            type: "integer"
+            format: "int32"
+          END:
+            type: "integer"
+            format: "int32"
+          INT:
+            type: "integer"
+            format: "int32"
+          EDU:
+            type: "integer"
+            format: "int32"
+          SOC:
+            type: "integer"
+            format: "int32"
+      upp_dms:
+        type: "object"
+        properties:
+          STR:
+            type: "integer"
+            format: "int32"
+          DEX:
+            type: "integer"
+            format: "int32"
+          END:
+            type: "integer"
+            format: "int32"
+          INT:
+            type: "integer"
+            format: "int32"
+          EDU:
+            type: "integer"
+            format: "int32"
+          SOC:
+            type: "integer"
+            format: "int32"
+      skill_counter: {}
+      possession_counter: {}
