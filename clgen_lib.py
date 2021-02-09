@@ -333,6 +333,7 @@ class Character:
         self.upp = {"STR": stellagama.dice(2, 6), "DEX": stellagama.dice(2, 6), "END": stellagama.dice(2, 6),
                     "INT": stellagama.dice(2, 6), "EDU": stellagama.dice(2, 6), "SOC": stellagama.dice(2, 6)}
         self.upp_dms = upp_dms(self.upp)
+        self.death=death
         self.history = []
         self.skills = []
         self.skill_counter = {}
@@ -371,13 +372,13 @@ class Character:
             # Survival
             survival = stellagama.dice(2, 6)
             survival += self.upp_dms[careers[self.career]["survival DM"]]
-            if death:
+            if self.death:
                 if survival >= careers[self.career]["survival"]:
                     pass
                 else:
                     self.status = "DECEASED"
                     break
-            if not death:
+            if not self.death:
                 if survival >= careers[self.career]["survival"]:
                     pass
                 else:
