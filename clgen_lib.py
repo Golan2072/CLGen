@@ -1,6 +1,6 @@
 # CLGen-lib.py
 # Cepheus Light character generator by Omer Golan-Joel
-# v1.01 - February 7th, 2021
+# v0.6 - August 11th, 2020
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -95,7 +95,7 @@ careers = {
                  "muster materials": (
                      "Low Passage", "+1 EDU", "Weapon", "Contact", "High Passage", "Explorer's Society", "Free Trader"),
                  "personal": ("+1 STR", '+1 DEX', "Athletics", "Zero-G", "Melee Combat", "Carousing"),
-                 "service": ("Repair", "Liaison", "Gun Combat", "Administration", "Streetwise", "Steward"),
+                 "service": ("Repair", "Liaison", "Gun Combat", "Admin", "Streetwise", "Steward"),
                  "specialist": ("Liaison", "Gunnery", "Jack-o-Trades", "Medicine", "Engineering", "Piloting"),
                  "advanced education": (
                      "Administration", "Engineering", "Medicine", "Computers", "Science", "Tactics")},
@@ -134,7 +134,7 @@ careers = {
                   "Low Passage", "+1 INT", "Weapon", "Contact", "Weapon", "Mid Passage", "+1 SOC"),
               "personal": ("+1 STR", '+1 DEX', "+1 END", "Athletics", "Melee Combat", "Carousing"),
               "service": ("Streetwise", "Repair", "Gun Combat", "Deception", "Stealth", "Recon"),
-              "specialist": ("Computer", "Repair", "Carousing", "Administration", "Recon", "Deception"),
+              "specialist": ("Computer", "Repair", "Carousing", "Admin", "Recon", "Deception"),
               "advanced education": (
                   "Survival", "Engineering", "Jack o' Trades", "Medicine", "Investigation", "Tactics")},
     'Scholar': {"name": 'Scholar', "qualification": 6, "qualification DM": "EDU", 'survival': 4, "survival DM": "INT",
@@ -146,8 +146,8 @@ careers = {
                 "muster materials": (
                     "Contact", "+1 EDU", "+1 INT", "Mid Passage", "+1 SOC", "High Passage", "Research Vessel"),
                 "personal": ("+1 STR", '+1 DEX', "+1 END", "+1 INT", "+1 EDU", "Carousing"),
-                "service": ("Administration", "Computer", "Medicine", "Liaison", "Investigation", "Science"),
-                "specialist": ("Survival", "Administration", "Medicine", "Science", "Repair", "Carousing"),
+                "service": ("Admin", "Computer", "Medicine", "Liaison", "Investigation", "Science"),
+                "specialist": ("Survival", "Admin", "Medicine", "Science", "Repair", "Carousing"),
                 "advanced education": ("Piloting", "Computer", "Engineering", "Medicine", "Jack o' Trades", "Science")},
     'Scout': {"name": 'Scout', "qualification": 6, "qualification DM": "INT", 'survival': 7, "survival DM": "END",
               "reenlistment": 6, "advancement": 6, "advancement DM": "INT", "ranks": (
@@ -160,16 +160,16 @@ careers = {
               "personal": ("+1 STR", '+1 DEX', "Athletics", "Jack o' Trades", "+1 EDU", "Melee Combat"),
               "service": ("Repair", "Computer", "Gun Combat", "Piloting", "Recon", "Piloting"),
               "specialist": ("Engineering", "Gunnery", "Science", "Piloting", "Investigation", "Stealth"),
-              "advanced education": ("Administration", "Computer", "Grav Vehicle", "Medicine", "Science", "Tactics")}
+              "advanced education": ("Admin", "Computer", "Grav Vehicle", "Medicine", "Science", "Tactics")}
 }
 
 # Other data
 
 weapons = (
-    "Axe", "Cudgel", "Dagger", "Dagger", "Dagger", "Spear", "Staff", "Sword", "Sword", "Sword", "Broadsword", "Great Axe", "Cutlass", "Machete", "Stun Prod",
-    "Vibro-Blade", "Vibro-Blade", "Bow", "Crossbow", "Revolver", "Revolver", "Shotgun", "Shotgun", "Autopistol", "Autopistol", "Autopistol", "Carbine", "Rifle", "Submachinegun",
+    "Axe", "Cudgel", "Dagger", "Spear", "Staff", "Sword", "Broadsword", "Great Axe", "Cutlass", "Machete", "Stun Prod",
+    "Vibro-Blade", "Bow", "Crossbow", "Revolver", "Shotgun", "Autopistol", "Carbine", "Rifle", "Submachinegun",
     "Assault Rifle",
-    "Body Pistol", "Snub Revolver", "Snub Revolver", "Snub Revolver", "Snub Revolver", "Accelerator Rifle", "Stunner", "Stunner", "Stunner")
+    "Body Pistol", "Snub Revolver", "Accelerator Rifle", "Stunner")
 skills = (
     "Administration", "Aircraft", "Animals", "Athletics", "Carousing", "Computer", "Deception", "Demolitions",
     "Driving",
@@ -264,7 +264,7 @@ class Character:
         self.skills.append(random.choice(careers[self.career][skill_table]))
 
     def muster(self):
-        muster_table = random.choice(["muster materials", "muster cash"])
+        muster_table = random.choice(["muster materials", "muster materials", "muster cash"])
         muster_roll = stellagama.dice(1, 6) - 1
         if muster_table == "muster cash" and self.cash_counter < 3:
             if "Carousing" in self.skills:
@@ -316,7 +316,7 @@ class Character:
         elif "Medicine" in self.skill_counter:
             if self.skill_counter["Medicine"] >= 3:
                 self.title = "Dr."
-        elif self.upp["EDU"] in range(12, 13, 14):
+        elif self.upp["EDU"] >= 12:
             self.title = "Dr."
         elif self.upp["EDU"] >= 15:
             self.title = "Professor"
@@ -329,8 +329,7 @@ class Character:
         else:
             self.title = "Gecko"
 
-    def __init__(self, death=False, career=[]):
-        self.death = death
+    def __init__(self, death=True, career=[]):
         self.upp = {"STR": stellagama.dice(2, 6), "DEX": stellagama.dice(2, 6), "END": stellagama.dice(2, 6),
                     "INT": stellagama.dice(2, 6), "EDU": stellagama.dice(2, 6), "SOC": stellagama.dice(2, 6)}
         self.upp_dms = upp_dms(self.upp)
@@ -370,17 +369,19 @@ class Character:
         in_career = True
         while in_career:
             # Survival
-            if self.death:
-                survival = stellagama.dice(2, 6)
-                survival += self.upp_dms[careers[self.career]["survival DM"]]
+            survival = stellagama.dice(2, 6)
+            survival += self.upp_dms[careers[self.career]["survival DM"]]
+            if death:
                 if survival >= careers[self.career]["survival"]:
                     pass
-                elif survival < careers[self.career]["survival"]:
-                    self.status = "DECEASED"
                 else:
+                    self.status = "DECEASED"
+                    break
+            if not death:
+                if survival >= careers[self.career]["survival"]:
                     pass
-            elif not self.death:
-                pass
+                else:
+                    break
             else:
                 pass
             # Skills
@@ -525,8 +526,8 @@ class Character:
             self.cash = 0
         self.skill_counter = collections.Counter(self.skills)
         self.possession_counter = collections.Counter(self.possessions)
-        self.rank_name = careers[self.career]['ranks'][self.rank]
         self.title_gen()
+        self.rank_name = careers[self.career]['ranks'][self.rank]
         if self.title == "":
             if self.sex == "male":
                 self.title = "Mr."
