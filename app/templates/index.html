@@ -10,8 +10,13 @@
     {{possessions}}<br><br>
     {{skills}}<br><br>
     <form action="">
+        {% if deathDefault %}
+        <input type="radio" name="Death" value="Death" checked="checked"><span>Death enabled</span><br/>
+        <input type="radio" name="Death" value="Life"><span>Death disabled</span><br><br>
+        {% else %}
         <input type="radio" name="Death" value="Death"><span>Death enabled</span><br/>
         <input type="radio" name="Death" value="Life" checked="checked"><span>Death disabled</span><br><br>
+        {% endif %}
         <input type="submit" name="generate" value="Generate">
     </form><br>
 </form> </body>
