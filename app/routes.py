@@ -25,21 +25,3 @@ def chargen():
         return redirect(url_for('chargen', Death=death))
     else:
         pass
-
-
-@app.route("/api")
-def apiRoot():
-    with open('./api.swagger', 'r') as f:
-        data = f.read()
-    return Response(data, mimetype='application/x-yml')
-
-@app.route("/api/chargen")
-def apiChargen():
-    death = True
-    darg = request.args.get("death", None)
-    if darg is not None:
-        if darg.lower() == "false":
-            death = False
-    print("death="+str(death))
-    character = clgen_lib.Character(death)
-    return Response(json.dumps(character.__dict__), mimetype='application/json')
