@@ -14,13 +14,20 @@ def chargen():
         death = True
     elif death_toggle == "Life":
         death = False
-    character = clgen_lib.Character(death)
+    career_option = request.args.get("Career", None)
+    career = []
+    careerDefault = "Any"
+    if career_option is not None:
+        if career_option != "any":
+            career = career_option
+            careerDefault = career_option
+    character = clgen_lib.Character(death, career)
     return render_template("index.html", title=character.title, name=character.name, surname=character.surname,
                            upp_string=character.upp_string, age=character.age, status=character.status,
                            career=character.career, rank_name=character.rank_name, terms=character.terms,
                            credits=character.cash, possessions=character.possessions_string,
                            skills=character.skill_string,
-                           deathDefault=death)
+                           deathDefault=death, careerDefault=careerDefault)
     if request.args.get('generate') == 'Generate':
         return redirect(url_for('chargen', Death=death))
     else:

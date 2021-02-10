@@ -9,7 +9,24 @@
     {{career}} {{rank_name}}&emsp;&emsp;&emsp;{{terms}} Terms&emsp;&emsp;&emsp;Cr{{credits}}<br><br>
     {{possessions}}<br><br>
     {{skills}}<br><br>
+    <hr/>
     <form action="">
+        Career: <select name="Career">
+            <option value="any" {% if careerDefault=="any" %}selected{% endif %}>Any</option>
+            <option value="Agent" {% if careerDefault=="Agent" %}selected{% endif %}>Agent</option>
+            <option value="Army" {% if careerDefault=="Army" %}selected{% endif %}>Army</option>
+            <option value="Belter" {% if careerDefault=="Belter" %}selected{% endif %}>Belter</option>
+            <option value="Colonist" {% if careerDefault=="Colonist" %}selected{% endif %}>Colonist</option>
+            <option value="Elite" {% if careerDefault=="Elite" %}selected{% endif %}>Elite</option>
+            <option value="Marine" {% if careerDefault=="Marine" %}selected{% endif %}>Marine</option>
+            <option value="Merchant" {% if careerDefault=="Merchant" %}selected{% endif %}>Merchant</option>
+            <option value="Navy" {% if careerDefault=="Navy" %}selected{% endif %}>Navy</option>
+            <option value="Pirate" {% if careerDefault=="Pirate" %}selected{% endif %}>Pirate</option>
+            <option value="Rogue" {% if careerDefault=="Rogue" %}selected{% endif %}>Rogue</option>
+            <option value="Scholar" {% if careerDefault=="Scholar" %}selected{% endif %}>Scholar</option>
+            <option value="Scout" {% if careerDefault=="Scout" %}selected{% endif %}>Scout</option>
+        </select>
+        <br/>
         {% if deathDefault %}
         <input type="radio" name="Death" value="Death" checked="checked"><span>Death enabled</span><br/>
         <input type="radio" name="Death" value="Life"><span>Death disabled</span><br><br>
