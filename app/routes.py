@@ -19,7 +19,8 @@ def chargen():
                            upp_string=character.upp_string, age=character.age, status=character.status,
                            career=character.career, rank_name=character.rank_name, terms=character.terms,
                            credits=character.cash, possessions=character.possessions_string,
-                           skills=character.skill_string)
+                           skills=character.skill_string,
+                           deathDefault=death)
     if request.args.get('generate') == 'Generate':
         return redirect(url_for('chargen', Death=death))
     else:
