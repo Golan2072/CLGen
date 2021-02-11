@@ -1,6 +1,6 @@
 # CLGen-lib.py
-# Cepheus Light character generator by Omer Golan-Joel
-# v0.6 - August 11th, 2020
+# Cepheus Light command line character generator by Omer Golan-Joel
+# v1.0 - February 11th, 2021
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -358,14 +358,17 @@ class Character:
         self.homeworld = random.choice(["High-Tech World", "Colony", "Inhospitable Outpost", "Primitive Backwater"])
         self.skills.append(random.choice(homeworlds[self.homeworld]))
         # Enlistment
-        enlistment = stellagama.dice(2, 6)
-        enlistment += self.upp_dms[careers[self.career]["qualification DM"]]
-        if enlistment >= careers[self.career]["qualification"]:
-            self.career = self.career
-            self.history.append(f"Successfully enlisted into the {self.career}")
+        if career == []:
+            enlistment = stellagama.dice(2, 6)
+            enlistment += self.upp_dms[careers[self.career]["qualification DM"]]
+            if enlistment >= careers[self.career]["qualification"]:
+                self.career = self.career
+                self.history.append(f"Successfully enlisted into the {self.career}")
+            else:
+                self.career = random.choice(["Colonist", "Rogue", "Marine", "Merchant", "Navy", "Scout"])
+                self.history.append(f"Drafted into the {self.career}")
         else:
-            self.career = random.choice(["Colonist", "Rogue", "Marine", "Merchant", "Navy", "Scout"])
-            self.history.append(f"Drafted into the {self.career}")
+            self.career = career
         # Career generation loop
         in_career = True
         while in_career:
