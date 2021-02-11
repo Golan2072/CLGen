@@ -3,6 +3,9 @@ Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
 
+v1.5 - February 11th, 2021
+- Command line interface and Excel generation capabilities greatly improved.
+
 v1.4 - February 11th, 2021
 - Command line option added (CLGen.py).
 
