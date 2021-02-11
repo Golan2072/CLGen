@@ -1,6 +1,6 @@
-# CLGen-lib.py
+# CLGen.py
 # Cepheus Light command line character generator by Omer Golan-Joel
-# v1.0 - February 11th, 2021
+# v1.1 - February 11th, 2021
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -11,7 +11,9 @@ import clgen_lib
 import sys
 import openpyxl
 from openpyxl.styles import Font
-
+from openpyxl.worksheet.dimensions import ColumnDimension, DimensionHolder
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import Alignment
 
 def excel_save(filename, iteration):
     workbook = openpyxl.Workbook()
@@ -42,22 +44,35 @@ def excel_save(filename, iteration):
     for character_iteration in range (0, iteration):
         character = clgen_lib.Character(death=False)
         sheet.cell(row=excel_row, column=1).value = character_iteration+1
+        sheet.cell(row=excel_row, column=1).alignment = Alignment(horizontal='left')
         sheet.cell(row=excel_row, column=2).value = character.title
         sheet.cell(row=excel_row, column=3).value = character.name
         sheet.cell(row=excel_row, column=4).value = character.surname
         sheet.cell(row=excel_row, column=5).value = character.upp["STR"]
+        sheet.cell(row=excel_row, column=5).alignment = Alignment(horizontal='left')
         sheet.cell(row=excel_row, column=6).value = character.upp["DEX"]
+        sheet.cell(row=excel_row, column=6).alignment = Alignment(horizontal='left')
         sheet.cell(row=excel_row, column=7).value = character.upp["END"]
+        sheet.cell(row=excel_row, column=7).alignment = Alignment(horizontal='left')
         sheet.cell(row=excel_row, column=8).value = character.upp["INT"]
+        sheet.cell(row=excel_row, column=8).alignment = Alignment(horizontal='left')
         sheet.cell(row=excel_row, column=9).value = character.upp["EDU"]
+        sheet.cell(row=excel_row, column=9).alignment = Alignment(horizontal='left')
         sheet.cell(row=excel_row, column=10).value = character.upp["SOC"]
+        sheet.cell(row=excel_row, column=10).alignment = Alignment(horizontal='left')
         sheet.cell(row=excel_row, column=11).value = character.age
+        sheet.cell(row=excel_row, column=11).alignment = Alignment(horizontal='left')
         sheet.cell(row=excel_row, column=12).value = character.career
         sheet.cell(row=excel_row, column=13).value = character.rank_name
         sheet.cell(row=excel_row, column=14).value = character.cash
+        sheet.cell(row=excel_row, column=14).alignment = Alignment(horizontal='left')
         sheet.cell(row=excel_row, column=15).value = character.skill_string
         sheet.cell(row=excel_row, column=16).value = character.possessions_string
         excel_row += 1
+    dim_holder = DimensionHolder(worksheet=sheet)
+    for col in [2, 3, 4, 13, 15, 16]:
+        dim_holder[get_column_letter(col)] = ColumnDimension(sheet, min=col, max=col, width=20)
+    sheet.column_dimensions = dim_holder
     workbook.save(filename)
 
 
@@ -81,11 +96,11 @@ if __name__ == "__main__":
                 filename = sys.argv[2]
         except IndexError:
             filecheck = False
-        print(filecheck)
         if not filecheck:
             for i in range (0, i):
                 character = clgen_lib.Character()
                 print(f"{character.character_string}\n")
         if filecheck:
-            filename = "a"
+            print(f"Saving Excel spreadsheet {filename}.xlsx")
+            filename = str(sys.argv[2])
             excel_save(filename+".xlsx", i)
