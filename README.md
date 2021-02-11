@@ -3,10 +3,13 @@ Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
 
-v1.3, February 10th, 2021
+v1.4 - February 11th, 2021
+- Command line option added (CLGen.py).
+
+v1.3 - February 10th, 2021
 - Character death radio buttons now reetain their previous selection upon page reload. Thanks Jo Jaquinta for the fix!
 
-v1.2.1, February 9th, 2021
+v1.2.1 - February 9th, 2021
 - When character death is turned off, a failed survival throw now terminated the career (as a failed reenlistment throw).
 
 v1.2 - February 8th, 2021
