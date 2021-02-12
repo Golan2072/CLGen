@@ -1,6 +1,5 @@
 # CLGen-lib.py
 # Cepheus Light character generator by Omer Golan-Joel
-# v0.6 - August 11th, 2020
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -86,7 +85,7 @@ careers = {
                "service": ("Heavy Weapons", "Athletics", "Gun Combat", "Gunnery", "Melee Combat", "Zero-G"),
                "specialist": ("Repair", "Demolitions", "Leadership", "Survival", "Recon", "Grav Vehicle"),
                "advanced education": ("Administration", "Computer", "Piloting", "Medicine", "Science", "Tactics")},
-    'Merchant': {"name": 'Merchant', "qualification": 6, "qualification DM": "INT", 'survival': 7, "survival DM": "END",
+    'Merchant': {"name": 'Merchant', "qualification": 6, "qualification DM": "INT", 'survival': 5, "survival DM": "END",
                  "reenlistment": 6, "advancement": 4, "advancement DM": "INT", "ranks": (
             "Crewmember", "Deck Cadet", "Fourth Officer", "Third Officer", "Second Officer", "First Officer",
             "Captain"),
@@ -95,7 +94,7 @@ careers = {
                  "muster materials": (
                      "Low Passage", "+1 EDU", "Weapon", "Contact", "High Passage", "Explorer's Society", "Free Trader"),
                  "personal": ("+1 STR", '+1 DEX', "Athletics", "Zero-G", "Melee Combat", "Carousing"),
-                 "service": ("Repair", "Liaison", "Gun Combat", "Admin", "Streetwise", "Steward"),
+                 "service": ("Repair", "Liaison", "Gun Combat", "Administration", "Streetwise", "Steward"),
                  "specialist": ("Liaison", "Gunnery", "Jack-o-Trades", "Medicine", "Engineering", "Piloting"),
                  "advanced education": (
                      "Administration", "Engineering", "Medicine", "Computers", "Science", "Tactics")},
@@ -134,20 +133,20 @@ careers = {
                   "Low Passage", "+1 INT", "Weapon", "Contact", "Weapon", "Mid Passage", "+1 SOC"),
               "personal": ("+1 STR", '+1 DEX', "+1 END", "Athletics", "Melee Combat", "Carousing"),
               "service": ("Streetwise", "Repair", "Gun Combat", "Deception", "Stealth", "Recon"),
-              "specialist": ("Computer", "Repair", "Carousing", "Admin", "Recon", "Deception"),
+              "specialist": ("Computer", "Repair", "Carousing", "Administration", "Recon", "Deception"),
               "advanced education": (
                   "Survival", "Engineering", "Jack o' Trades", "Medicine", "Investigation", "Tactics")},
     'Scholar': {"name": 'Scholar', "qualification": 6, "qualification DM": "EDU", 'survival': 4, "survival DM": "INT",
                 "reenlistment": 5, "advancement": 9, "advancement DM": "EDU", "ranks": (
             "Student", "Researcher", "Research Professor", "Assistant Professor", "Associate Professor", "Professor",
             "Distinguished Professor"),
-                "rank skills": {0: "Admin", 3: "Liaison"},
+                "rank skills": {0: "Administration", 3: "Liaison"},
                 "muster cash": (1000, 5000, 10000, 10000, 20000, 50000, 50000),
                 "muster materials": (
                     "Contact", "+1 EDU", "+1 INT", "Mid Passage", "+1 SOC", "High Passage", "Research Vessel"),
                 "personal": ("+1 STR", '+1 DEX', "+1 END", "+1 INT", "+1 EDU", "Carousing"),
-                "service": ("Admin", "Computer", "Medicine", "Liaison", "Investigation", "Science"),
-                "specialist": ("Survival", "Admin", "Medicine", "Science", "Repair", "Carousing"),
+                "service": ("Administration", "Computer", "Medicine", "Liaison", "Investigation", "Science"),
+                "specialist": ("Survival", "Administration", "Medicine", "Science", "Repair", "Carousing"),
                 "advanced education": ("Piloting", "Computer", "Engineering", "Medicine", "Jack o' Trades", "Science")},
     'Scout': {"name": 'Scout', "qualification": 6, "qualification DM": "INT", 'survival': 7, "survival DM": "END",
               "reenlistment": 6, "advancement": 6, "advancement DM": "INT", "ranks": (
@@ -160,7 +159,7 @@ careers = {
               "personal": ("+1 STR", '+1 DEX', "Athletics", "Jack o' Trades", "+1 EDU", "Melee Combat"),
               "service": ("Repair", "Computer", "Gun Combat", "Piloting", "Recon", "Piloting"),
               "specialist": ("Engineering", "Gunnery", "Science", "Piloting", "Investigation", "Stealth"),
-              "advanced education": ("Admin", "Computer", "Grav Vehicle", "Medicine", "Science", "Tactics")}
+              "advanced education": ("Administration", "Computer", "Grav Vehicle", "Medicine", "Science", "Tactics")}
 }
 
 # Other data

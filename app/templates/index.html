@@ -29,11 +29,11 @@
         </select>
         <br/>
         {% if deathDefault %}
-        <input type="radio" name="Death" value="Death" checked="checked"><span>Death enabled</span><br/>
+        <input type="radio" name="Death" value="Death" checked="checked"><span>Deadly survival throws</span><br/>
         <input type="radio" name="Death" value="Life"><span>Death disabled</span><br><br>
         {% else %}
         <input type="radio" name="Death" value="Death"><span>Death enabled</span><br/>
-        <input type="radio" name="Death" value="Life" checked="checked"><span>Death disabled</span><br><br>
+        <input type="radio" name="Death" value="Life" checked="checked"><span>Non-deadly survival throws</span><br><br>
         {% endif %}
         <input type="submit" name="generate" value="Generate">
     </form><br>
