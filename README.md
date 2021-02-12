@@ -3,6 +3,11 @@ Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
 
+v1.6 - February 12th, 2021
+- Added the option to select a specific career to generate.
+- Skills are now limited to INT+EDU.
+- Refactored the skill addition mechanism for uniformity and clarity.
+
 v1.5 - February 11th, 2021
 - Command line interface and Excel generation capabilities greatly improved.
 
