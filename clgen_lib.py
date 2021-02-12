@@ -1,6 +1,6 @@
 # CLGen-lib.py
-# Cepheus Light command line character generator by Omer Golan-Joel
-# v1.0 - February 11th, 2021
+# Cepheus Light character generator by Omer Golan-Joel
+# v0.6 - August 11th, 2020
 # This is open source code, feel free to use it for any purpose
 # contact me at golan2072@gmail.com
 
@@ -259,9 +259,18 @@ def benefit_choice(rank, benefit_list):
 
 
 class Character:
-    def add_skill(self):
-        skill_table = random.choice(("personal", "service", "specialist", "advanced education"))
-        self.skills.append(random.choice(careers[self.career][skill_table]))
+    def add_skill(self, skill):
+        if self.skill_ranks <= self.upp["INT"] + self.upp["EDU"]:
+            self.skill_ranks += 1
+            self.skills.append(skill)
+        else:
+            pass
+
+
+    def add_random_skill(self):
+            skill_table = random.choice(("personal", "service", "specialist", "advanced education"))
+            self.add_skill(random.choice(careers[self.career][skill_table]))
+
 
     def muster(self):
         muster_table = random.choice(["muster materials", "muster materials", "muster cash"])
@@ -281,6 +290,7 @@ class Character:
             self.possessions.append((careers[self.career]["muster materials"][muster_roll]))
         else:
             pass
+
 
     def reduce_physical_characteristic(self, amount):
         characteristic = random.choice(["STR", "DEX", "END"])
@@ -330,6 +340,7 @@ class Character:
             self.title = "Gecko"
 
     def __init__(self, death=True, career=[]):
+        self.skill_ranks = 1
         self.upp = {"STR": stellagama.dice(2, 6), "DEX": stellagama.dice(2, 6), "END": stellagama.dice(2, 6),
                     "INT": stellagama.dice(2, 6), "EDU": stellagama.dice(2, 6), "SOC": stellagama.dice(2, 6)}
         self.upp_dms = upp_dms(self.upp)
@@ -356,7 +367,7 @@ class Character:
         self.character_string = ""
         self.upp_string = ""
         self.homeworld = random.choice(["High-Tech World", "Colony", "Inhospitable Outpost", "Primitive Backwater"])
-        self.skills.append(random.choice(homeworlds[self.homeworld]))
+        self.add_skill(random.choice(homeworlds[self.homeworld]))
         # Enlistment
         if career == []:
             enlistment = stellagama.dice(2, 6)
@@ -391,18 +402,18 @@ class Character:
             # Skills
             if self.terms == 1:
                 for i in range(0, 2):
-                    self.add_skill()
+                    self.add_random_skill()
             else:
-                self.add_skill()
+                self.add_random_skill()
             if self.rank in careers[self.career]["rank skills"]:
-                self.skills.append(careers[self.career]["rank skills"][self.rank])
+                self.add_skill(careers[self.career]["rank skills"][self.rank])
             # Advancement
             if self.rank in range(0, 6):
                 advancement = stellagama.dice(2, 6)
                 advancement += self.upp_dms[careers[self.career]["advancement DM"]]
                 if advancement >= careers[self.career]["advancement"]:
                     self.rank += 1
-                    self.add_skill()
+                    self.add_random_skill()
                 else:
                     pass
             else:
@@ -479,7 +490,7 @@ class Character:
         for i in range(0, muster_throws):
             self.muster()
         if self.status != "DECEASED":
-            self.skills.append(random.choice(skills))
+            self.add_skill(random.choice(skills))
         else:
             pass
         # Data Processing
