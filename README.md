@@ -3,6 +3,8 @@ Cepheus Light character generator by Omer Golan-Joel
 This is open source code, feel free to use it for any purpose
 Contact me at golan2072@gmail.com
 
+Web app - to use it please go to https://cepheuslightgen.herokuapp.com/
+
 v1.61 - February 12th, 2021
 - Fixed erraneous Merchant survival throws.
 - "Administration" is now used throughout the chargen system rather than "Admin".
